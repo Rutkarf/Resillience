@@ -1,0 +1,44 @@
+<footer class="footer cyber-footer">
+    <div class="container">
+      <div class="footer-content">
+        <div class="footer-left">
+          
+          <div class="totem-phrase" (click)="toggleTotemEdit()">
+            <span class="cyber-quote" *ngIf="!editingTotem">"{{totemPhrase}}"</span>
+            <div class="totem-edit" *ngIf="editingTotem">
+              <input type="text" 
+                     [(ngModel)]="tempTotemPhrase" 
+                     (keyup.enter)="saveTotemPhrase()"
+                     (blur)="saveTotemPhrase()"
+                     class="cyber-input"
+                     placeholder="Entrez votre phrase totem">
+              <div class="cyber-tooltip">
+                Cette Totem-phrase est votre garantie de sécurité. 
+                Si elle diffère, vous n'êtes pas sur Resillience.
+              </div>
+            </div>
+          </div>
+        </div>
+        
+        <div class="footer-center">
+          <div class="social-icons">
+            <a href="#" class="cyber-icon" *ngFor="let icon of socialIcons"
+               [@iconState]="icon.state"
+               (mouseenter)="icon.state = 'hovered'"
+               (mouseleave)="icon.state = 'normal'">
+              <i class="bi bi-{{icon.name}}"></i>
+              <span class="icon-glow"></span>
+            </a>
+          </div>
+        </div>
+  
+        <div class="footer-right">
+          <div class="footer-links cyber-links">
+            <a href="#" class="cyber-link">Mentions légales</a>
+            <a href="#" class="cyber-link">Confidentialité</a>
+            <a href="#" class="cyber-link">Contact</a>
+          </div>
+        </div>
+      </div>
+    </div>
+  </footer>

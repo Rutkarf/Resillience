@@ -1,0 +1,23 @@
+.home-container {
+  display: flex;
+  flex-direction: column;
+  height: calc(100vh - 60px);
+  padding: 2rem;
+  margin-top: 60px;
+  background-color: var(--sidemenu-bg);
+}
+
+
+
+.token-container {
+  flex: 1;
+  min-height: 500px;
+  position: relative;
+  border: 1px solid var(--sidemenu-border);
+  border-radius: 12px;
+  overflow: hidden;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}
+

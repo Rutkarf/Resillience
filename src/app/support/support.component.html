@@ -1,0 +1,27 @@
+<div class="support-container">
+  <h2>Support</h2>
+  
+  <div class="text-center mb-4">
+    <h3>Rechercher dans FAQ</h3>
+    <input type="text" placeholder="Tapez votre question..." [(ngModel)]="searchQuery" class="form-control" style="width: 50%; margin: 0 auto;">
+  </div>
+
+  <div class="questions-list">
+    <div class="row">
+      <div class="col-md-6 mb-3" *ngFor="let question of questions">
+        <div class="question">
+          <h4>{{ question.text }}</h4>
+          <p *ngIf="question.answers.length > 0">{{ question.answers[0] }}</p>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <div class="text-center mt-4">
+    <button class="btn btn-lg btn-primary" (click)="contactSupport()">Contacter le support</button>
+  </div>
+
+  <div class="text-right mt-4">
+    <button class="btn btn-lg btn-success" (click)="showAllTopics()">Afficher l'intégralité des topics</button>
+  </div>
+</div>

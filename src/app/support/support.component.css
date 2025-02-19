@@ -1,0 +1,128 @@
+.support-container {
+  background: linear-gradient(135deg, rgba(0, 0, 0, 0.8), rgba(0, 0, 0, 0.5));
+  border-radius: 15px;
+  padding: 20px;
+  box-shadow: 0 0 20px rgba(0, 255, 255, 0.5);
+  color: #0ff;
+  font-family: 'Orbitron', sans-serif;
+  position: relative;
+  overflow: hidden;
+}
+
+.dark-mode .support-container {
+  background: linear-gradient(135deg, rgba(255, 255, 255, 0.1), rgba(255, 255, 255, 0.2));
+  color: #000;
+}
+
+.new-question {
+  margin-bottom: 20px;
+}
+
+.new-question input {
+  width: 70%;
+  padding: 10px;
+  margin-right: 10px;
+}
+
+.new-question button {
+  padding: 10px 15px;
+}
+
+.questions-list {
+  margin-top: 20px;
+}
+
+.question {
+  background: rgba(255, 255, 255, 0.1);
+  border: 1px solid rgba(0, 255, 255, 0.3);
+  border-radius: 10px;
+  padding: 15px;
+  margin: 10px 0;
+  transition: transform 0.3s, box-shadow 0.3s;
+  height: 150px;
+}
+
+.dark-mode .question {
+  background: rgba(0, 0, 0, 0.5);
+  border: 1px solid rgba(255, 255, 255, 0.3);
+}
+
+.question:hover {
+  transform: scale(1.05);
+  box-shadow: 0 0 30px rgba(0, 255, 255, 0.7);
+}
+
+.answers {
+  margin-top: 10px;
+}
+
+h2, h3, h4 {
+  color: inherit;
+}
+
+h2 {
+  text-align: center;
+  font-size: 2.5rem;
+  text-shadow: 0 0 10px rgba(0, 255, 255, 0.8), 0 0 20px rgba(0, 255, 255, 0.5);
+  margin-bottom: 20px;
+}
+
+input[type="text"] {
+  width: 100%;
+  padding: 10px;
+  border: none;
+  border-radius: 5px;
+  background: rgba(255, 255, 255, 0.2);
+  color: #0ff;
+  font-size: 1rem;
+  transition: background 0.3s, box-shadow 0.3s;
+}
+
+input[type="text"]:hover {
+  background: rgba(255, 255, 255, 0.3);
+  box-shadow: 0 0 10px rgba(0, 255, 255, 0.5);
+}
+
+button {
+  background: rgba(0, 255, 255, 0.7);
+  color: #000;
+  border: none;
+  border-radius: 5px;
+  padding: 10px 20px;
+  cursor: pointer;
+  font-size: 1rem;
+  transition: background 0.3s, transform 0.3s;
+}
+
+button:hover {
+  background: rgba(0, 255, 255, 1);
+  transform: translateY(-2px);
+  box-shadow: 0 0 15px rgba(0, 255, 255, 0.7);
+}
+
+.support-container::before {
+  content: '';
+  position: absolute;
+  top: 0;
+  left: 0;
+  right: 0;
+  bottom: 0;
+  background-size: cover;
+  opacity: 0.1;
+  z-index: -1;
+  animation: pulse 5s infinite alternate;
+}
+
+@keyframes pulse {
+  0% {
+    transform: scale(1);
+  }
+  100% {
+    transform: scale(1.05);
+  }
+}
+
+/* Styles pour les sections de recherche et de contact */
+.row {
+  margin-bottom: 20px;
+}

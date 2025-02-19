@@ -1,0 +1,76 @@
+@import "bootstrap/dist/css/bootstrap.min.css";
+@import "@angular/material/prebuilt-themes/indigo-pink.css";
+
+body {
+    transition: background-color 0.3s ease-in-out, color 0.3s ease-in-out;
+    margin: 0;
+    padding: 0;
+    background-color: var(--background-color);
+}
+
+body.dark-mode {
+    --background-color: #1a1a1a;
+    color: #fff;
+}
+
+.dark-mode .navbar {
+    box-shadow: 0 2px 4px rgba(255, 255, 255, 0.1);
+}
+
+.navbar {
+    box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+}
+
+:root {
+    --background-color: #f0f0f0;
+    --glass-background: rgba(255, 255, 255, 0.8);
+    --glass-border: rgba(0, 0, 0, 0.1);
+    --text-color: #333;
+    --sidemenu-bg: rgba(255, 255, 255, 0.9);
+    --sidemenu-color: #0f0f0f;
+    --sidemenu-border: rgba(0, 0, 0, 0.2);
+    --sidemenu-hover-bg: rgba(0, 0, 0, 0.05);
+    --sidemenu-icon-color: #007bff;
+}
+
+.dark-mode {
+    --background-color: #1a1a1a;
+    --sidemenu-bg: rgba(10, 10, 10, 0.9);
+    --sidemenu-color: #0ff;
+    --sidemenu-border: rgba(0, 255, 255, 0.3);
+    --sidemenu-hover-bg: rgba(0, 255, 255, 0.1);
+    --sidemenu-icon-color: #f0f;
+}
+
+/* Styles pour le glassmorphisme */
+.card, .question, .footer, .navbar, .sidemenu {
+    border: none;
+    background: var(--glass-background);
+    backdrop-filter: blur(10px);
+    border-radius: 15px;
+    box-shadow: 0 4px 20px rgba(0, 0, 0, 0.1);
+}
+
+.dark-mode .card, .dark-mode .question, .dark-mode .footer, .dark-mode .navbar, .dark-mode .sidemenu {
+    background: rgba(0, 0, 0, 0.8);
+    border: 1px solid rgba(0, 255, 255, 0.3);
+    box-shadow: 0 0 20px rgba(0, 255, 255, 0.5);
+}
+
+.main-container {
+    padding: 20px;
+}
+
+.container-fluid {
+    padding: 1rem;
+}
+
+.card {
+    margin: 0.5rem;
+}
+
+.table-container {
+    max-height: 300px;
+    overflow-y: auto;
+}
+  

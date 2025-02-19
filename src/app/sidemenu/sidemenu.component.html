@@ -1,0 +1,11 @@
+<div class="sidemenu">
+  <div class="menu-items">
+    <ng-container *ngFor="let item of menuItems">
+      <a [routerLink]="item.route" routerLinkActive="active" class="menu-item">
+        <i class="bi" [ngClass]="item.icon"></i>
+        {{ item.label }}
+      </a>
+    </ng-container>
+  </div>
+</div>
+  

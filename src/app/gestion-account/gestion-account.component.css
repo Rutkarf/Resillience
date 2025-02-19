@@ -1,0 +1,158 @@
+.container-fluid {
+  background-color: var(--sidemenu-bg);
+  min-height: calc(100vh - 140px);
+  border-radius: 15px;
+  margin: 20px;
+  backdrop-filter: blur(5px);
+}
+
+.card {
+  background-color: rgba(10, 10, 10, 0.8);
+  border: 1px solid var(--sidemenu-border);
+  border-radius: 12px;
+  box-shadow: 0 0 20px rgba(0, 255, 255, 0.1);
+  transition: all 0.3s ease;
+}
+
+.card:hover {
+  box-shadow: 0 0 30px rgba(0, 255, 255, 0.2);
+  transform: translateY(-2px);
+}
+
+.card-title {
+  color: var(--sidemenu-color);
+  font-size: 1.5rem;
+  text-transform: uppercase;
+  letter-spacing: 1px;
+  border-bottom: 2px solid var(--sidemenu-border);
+  padding-bottom: 10px;
+}
+
+mat-form-field {
+  width: 100%;
+  margin-bottom: 1rem;
+}
+
+.mat-mdc-table {
+  background: transparent;
+  border: 1px solid var(--sidemenu-border);
+  border-radius: 8px;
+  overflow: hidden;
+}
+
+.mat-mdc-header-cell {
+  background-color: rgba(0, 255, 255, 0.1);
+  color: var(--sidemenu-color);
+  font-weight: 600;
+  text-transform: uppercase;
+  letter-spacing: 0.5px;
+}
+
+.mat-mdc-cell {
+  color: var(--sidemenu-color);
+  border-bottom: 1px solid var(--sidemenu-border);
+}
+
+.mat-mdc-row:hover {
+  background-color: var(--sidemenu-hover-bg);
+}
+
+button[mat-raised-button] {
+  background-color: var(--sidemenu-icon-color);
+  color: white;
+  text-transform: uppercase;
+  letter-spacing: 1px;
+  padding: 8px 24px;
+  border-radius: 25px;
+  transition: all 0.3s ease;
+}
+
+button[mat-raised-button]:hover {
+  box-shadow: 0 0 15px var(--sidemenu-icon-color);
+  transform: scale(1.05);
+}
+
+#threejs-container {
+  height: 300px;
+  background: linear-gradient(45deg, rgba(0,255,255,0.1), rgba(255,0,255,0.1));
+  border-radius: 12px;
+  border: 1px solid var(--sidemenu-border);
+}
+
+mat-card {
+  background-color: rgba(10, 10, 10, 0.8);
+  border: 1px solid var(--sidemenu-border);
+  margin-bottom: 1.5rem;
+}
+
+mat-card h2 {
+  color: var(--sidemenu-color);
+  font-size: 2rem;
+  text-align: center;
+  margin: 1rem 0;
+  text-shadow: 0 0 10px var(--sidemenu-color);
+}
+
+.dark-mode .card {
+  background-color: rgba(245, 245, 245, 0.9);
+}
+
+.dark-mode .mat-mdc-header-cell {
+  background-color: rgba(0, 0, 139, 0.1);
+}
+
+@media (max-width: 768px) {
+  .container-fluid {
+    margin: 10px;
+  }
+}
+
+.table-container {
+  max-height: 200px;
+  overflow-y: auto;
+}
+
+.text-truncate {
+  max-width: 150px;
+  overflow: hidden;
+  text-overflow: ellipsis;
+  white-space: nowrap;
+}
+
+.value-card {
+  background: linear-gradient(135deg, rgba(0,255,255,0.1), rgba(255,0,255,0.1));
+}
+
+.total-balance {
+  font-size: 2.5rem;
+  text-align: center;
+  margin: 1.5rem 0;
+  font-weight: bold;
+  background: linear-gradient(45deg, var(--sidemenu-color), var(--sidemenu-icon-color));
+  -webkit-background-clip: text;
+  background-clip: text;
+  -webkit-text-fill-color: transparent;
+}
+
+.mat-mdc-table {
+  background: transparent !important;
+}
+
+.mat-mdc-row:hover {
+  background-color: var(--sidemenu-hover-bg) !important;
+  cursor: pointer;
+}
+
+.card-body {
+  padding: 1.5rem;
+}
+
+mat-form-field {
+  margin-bottom: 1rem;
+}
+
+.d-flex.gap-3 button {
+  height: 56px;
+  margin-bottom: 1rem;
+}
+  
