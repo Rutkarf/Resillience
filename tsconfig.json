@@ -18,7 +18,9 @@
     "types": ["three"],
     "paths": {
       "three/examples/jsm/*": ["./node_modules/three/examples/jsm/*"],
-      "three/examples/jsm/controls/OrbitControls": ["./node_modules/@types/three/examples/jsm/controls/OrbitControls"]
+      "three/examples/jsm/controls/OrbitControls": ["./node_modules/@types/three/examples/jsm/controls/OrbitControls"],
+      "three/examples/jsm/postprocessing/EffectComposer": ["./node_modules/@types/three/examples/jsm/postprocessing/EffectComposer"],
+      "three/examples/jsm/postprocessing/ShaderPass": ["./node_modules/@types/three/examples/jsm/postprocessing/ShaderPass"]
     },
     
     "typeRoots": [

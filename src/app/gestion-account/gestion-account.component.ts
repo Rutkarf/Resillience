@@ -5,6 +5,7 @@ import { MatFormFieldModule } from '@angular/material/form-field';
 import { MatInputModule } from '@angular/material/input';
 import { MatTableModule } from '@angular/material/table';
 import { MatCardModule } from '@angular/material/card';
+import { TokenRaveComponent } from '../token-rave/token-rave.component';
 
 @Component({
   selector: 'app-gestion-account',
@@ -15,7 +16,8 @@ import { MatCardModule } from '@angular/material/card';
     MatFormFieldModule,
     MatInputModule,
     MatTableModule,
-    MatCardModule
+    MatCardModule,
+    TokenRaveComponent
   ],
   templateUrl: './gestion-account.component.html',
   styleUrls: ['./gestion-account.component.css']

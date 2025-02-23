@@ -9,11 +9,9 @@ import { HostListener } from '@angular/core';
   standalone: true,
   imports: [CommonModule, TokenRaveComponent],
   template: `
-    <div class="home-container">
-      <div class="token-container">
+
         <app-token-rave></app-token-rave>
-      </div>
-    </div>
+      
   `,
   styleUrls: ['./home.component.css']
 })

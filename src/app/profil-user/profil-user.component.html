@@ -1,1 +1,132 @@
+<div class="cyberpunk-profile"></div>
+  <div class="row g-4">
+    <!-- Carte 1: Informations de base -->
+    <div class="col-md-6 col-lg-4">
+      <div class="card cyberpunk-card h-100">
+        <div class="card-body">
+          <h3 class="card-title neon-text">Informations de base</h3>
+          <form>
+            <div class="mb-3 cyberpunk-input">
+              <label for="username" class="form-label">Username</label>
+              <div class="input-group">
+                <input type="text" class="form-control" id="username" placeholder="Nouveau username">
+                <button type="button" class="btn btn-neon"><i class="bi bi-save"></i></button>
+              </div>
+            </div>
+            <div class="mb-3 cyberpunk-input">
+              <label for="phone" class="form-label">Numéro de téléphone</label>
+              <div class="input-group">
+                <input type="tel" class="form-control" id="phone" placeholder="Nouveau numéro de téléphone">
+                <button type="button" class="btn btn-neon"><i class="bi bi-save"></i></button>
+              </div>
+            </div>
+            <div class="mb-3 cyberpunk-input">
+              <label for="address" class="form-label">Adresse</label>
+              <div class="input-group">
+                <textarea class="form-control" id="address" rows="2" placeholder="Nouvelle adresse"></textarea>
+                <button type="button" class="btn btn-neon"><i class="bi bi-save"></i></button>
+              </div>
+            </div>
+            <div class="mb-3 cyberpunk-input">
+              <label for="slogan" class="form-label">Slogan personnel</label>
+              <div class="input-group">
+                <input type="text" class="form-control" id="slogan" placeholder="Votre slogan cyberpunk">
+                <button type="button" class="btn btn-neon"><i class="bi bi-save"></i></button>
+              </div>
+            </div>
+          </form>
+        </div>
+      </div>
+    </div>
 
+    <!-- Carte 2: Réseaux sociaux -->
+    <div class="col-md-6 col-lg-4">
+      <div class="card cyberpunk-card h-100">
+        <div class="card-body">
+          <h3 class="card-title neon-text">Réseaux sociaux</h3>
+          <form>
+            <div class="mb-3 cyberpunk-input">
+              <label for="twitter" class="form-label">Twitter</label>
+              <div class="input-group">
+                <input type="text" class="form-control" id="twitter" placeholder="@username">
+                <button type="button" class="btn btn-neon"><i class="bi bi-save"></i></button>
+              </div>
+            </div>
+            <div class="mb-3 cyberpunk-input">
+              <label for="instagram" class="form-label">Instagram</label>
+              <div class="input-group">
+                <input type="text" class="form-control" id="instagram" placeholder="@username">
+                <button type="button" class="btn btn-neon"><i class="bi bi-save"></i></button>
+              </div>
+            </div>
+            <div class="mb-3 cyberpunk-input">
+              <label for="linkedin" class="form-label">LinkedIn</label>
+              <div class="input-group">
+                <input type="text" class="form-control" id="linkedin" placeholder="URL du profil">
+                <button type="button" class="btn btn-neon"><i class="bi bi-save"></i></button>
+              </div>
+            </div>
+            <div class="mb-3 cyberpunk-input">
+              <label for="github" class="form-label">GitHub</label>
+              <div class="input-group">
+                <input type="text" class="form-control" id="github" placeholder="Nom d'utilisateur">
+                <button type="button" class="btn btn-neon"><i class="bi bi-save"></i></button>
+              </div>
+            </div>
+            <div class="mb-3 cyberpunk-input">
+              <label for="discord" class="form-label">Discord</label>
+              <div class="input-group">
+                <input type="text" class="form-control" id="discord" placeholder="Nom d'utilisateur#0000">
+                <button type="button" class="btn btn-neon"><i class="bi bi-save"></i></button>
+              </div>
+            </div>
+          </form>
+        </div>
+      </div>
+    </div>
+
+    <!-- Carte 3: Informations supplémentaires -->
+    <div class="col-md-6 col-lg-4">
+      <div class="card cyberpunk-card h-100">
+        <div class="card-body">
+          <h3 class="card-title neon-text">Informations supplémentaires</h3>
+          <form>
+            <div class="mb-3 cyberpunk-input">
+              <label for="bio" class="form-label">Biographie</label>
+              <div class="input-group">
+                <textarea class="form-control" id="bio" rows="3" placeholder="Parlez-nous de vous"></textarea>
+                <button type="button" class="btn btn-neon"><i class="bi bi-save"></i></button>
+              </div>
+            </div>
+            <div class="mb-3 cyberpunk-input">
+              <label for="website" class="form-label">Site web personnel</label>
+              <div class="input-group">
+                <input type="url" class="form-control" id="website" placeholder="https://...">
+                <button type="button" class="btn btn-neon"><i class="bi bi-save"></i></button>
+              </div>
+            </div>
+          </form>
+        </div>
+      </div>
+    </div>
+  </div>
+
+
+<!-- Modal pour la suppression du compte (inchangé) -->
+<div class="modal fade" id="deleteAccountModal" tabindex="-1" aria-labelledby="deleteAccountModalLabel" aria-hidden="true">
+  <div class="modal-dialog">
+    <div class="modal-content">
+      <div class="modal-header">
+        <h5 class="modal-title" id="deleteAccountModalLabel">Confirmer la suppression du compte</h5>
+        <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+      </div>
+      <div class="modal-body">
+        Êtes-vous sûr de vouloir supprimer votre compte ? Cette action est irréversible.
+      </div>
+      <div class="modal-footer">
+        <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Annuler</button>
+        <button type="button" class="btn btn-danger">Supprimer définitivement</button>
+      </div>
+    </div>
+  </div>
+</div>

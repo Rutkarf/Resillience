@@ -1,0 +1,109 @@
+:root {
+  --neon-blue: #00ffff;
+  --neon-pink: #ff00ff;
+  --neon-purple: #8a2be2;
+  --dark-bg: #1a1a2e;
+  --light-text: #e0e0e0;
+  --card-bg: rgba(26, 26, 46, 0.8);
+}
+
+.cyberpunk-profile {
+  padding: 1rem;
+  background-color: var(--dark-bg);
+  color: var(--light-text);
+  margin-left: 500px; /* Ajustez cette valeur selon la largeur de votre sidemenu */
+}
+
+.cyberpunk-card {
+  background-color: var(--card-bg);
+  border: 2px solid var(--neon-purple);
+  border-radius: 10px;
+  box-shadow: 0 0 15px var(--neon-blue);
+  transition: all 0.3s ease;
+  margin-bottom: 1rem;
+}
+
+.cyberpunk-card:hover {
+  box-shadow: 0 0 25px var(--neon-pink);
+}
+
+.card-title.neon-text {
+  color: var(--neon-blue);
+  text-shadow: 0 0 10px var(--neon-blue);
+  font-size: 1.2rem;
+  margin-bottom: 1rem;
+  text-transform: uppercase;
+  letter-spacing: 1px;
+}
+
+.cyberpunk-input .form-label {
+  color: var(--neon-green);
+  font-weight: bold;
+  margin-bottom: 0.3rem;
+  font-size: 0.9rem;
+}
+
+.cyberpunk-input .form-control {
+  background-color: rgba(0, 0, 0, 0.5);
+  border: 1px solid var(--neon-purple);
+  color: var(--light-text);
+  border-radius: 5px;
+  padding: 0.3rem 0.5rem;
+  font-size: 0.9rem;
+}
+
+.cyberpunk-input .form-control:focus {
+  box-shadow: 0 0 10px var(--neon-blue);
+  border-color: var(--neon-blue);
+}
+
+.btn-neon {
+  background-color: var(--neon-blue);
+  color: var(--dark-bg);
+  border: none;
+  border-radius: 5px;
+  padding: 0.3rem 0.5rem;
+  font-weight: bold;
+  text-transform: uppercase;
+  letter-spacing: 1px;
+  transition: all 0.3s ease;
+  font-size: 0.8rem;
+}
+
+.btn-neon:hover {
+  background-color: var(--neon-pink);
+  box-shadow: 0 0 15px var(--neon-pink);
+  transform: translateY(-2px);
+}
+
+.btn-neon-danger {
+  background-color: var(--neon-pink);
+}
+
+.btn-neon-danger:hover {
+  background-color: #ff3366;
+  box-shadow: 0 0 15px #ff3366;
+}
+
+.danger-zone {
+  border-top: 2px solid var(--neon-pink);
+  padding-top: 1rem;
+  margin-top: 1rem;
+}
+
+.danger-zone h4 {
+  font-size: 1rem;
+  margin-bottom: 0.5rem;
+}
+
+@media (max-width: 1200px) {
+  .cyberpunk-profile {
+    margin-left: 0;
+  }
+}
+
+@media (max-width: 991px) {
+  .col-lg-4 {
+    margin-bottom: 1rem;
+  }
+}

@@ -2,6 +2,7 @@ import { Component, OnInit, ElementRef, ViewChild, AfterViewInit, OnDestroy, Hos
 import * as THREE from 'three';
 import { OrbitControls } from 'three/examples/jsm/controls/OrbitControls';
 import { STLLoader } from 'three/examples/jsm/loaders/STLLoader';
+import { MeshPhysicalMaterial } from 'three';
 
 @Component({
   selector: 'app-token-rave',
@@ -16,8 +17,10 @@ export class TokenRaveComponent implements OnInit, AfterViewInit, OnDestroy {
   private camera!: THREE.PerspectiveCamera;
   private renderer!: THREE.WebGLRenderer;
   private controls!: OrbitControls;
-  private tokenMesh!: THREE.Mesh;
+  private tokenGroup!: THREE.Group;
   private animationFrameId: number | null = null;
+  private mainMaterial!: MeshPhysicalMaterial;
+  private colorChangeInterval: any;
 
   ngOnInit() {
     console.log('TokenRave component initialized');
@@ -37,6 +40,9 @@ export class TokenRaveComponent implements OnInit, AfterViewInit, OnDestroy {
     if (this.animationFrameId !== null) {
       cancelAnimationFrame(this.animationFrameId);
     }
+    if (this.colorChangeInterval) {
+      clearInterval(this.colorChangeInterval);
+    }
     this.disposeThreeJS();
   }
 
@@ -55,20 +61,23 @@ export class TokenRaveComponent implements OnInit, AfterViewInit, OnDestroy {
 
   private initThreeJS() {
     this.scene = new THREE.Scene();
-    this.scene.background = null; // Fond transparent
+    this.scene.background = null;
     
-    const container = this.canvasRef.nativeElement;
-    const width = container.clientWidth;
-    const height = container.clientHeight;
+    const canvas = this.canvasRef.nativeElement;
+    const width = canvas.clientWidth;
+    const height = canvas.clientHeight;
 
     this.camera = new THREE.PerspectiveCamera(75, width / height, 0.1, 1000);
     this.renderer = new THREE.WebGLRenderer({ 
       antialias: true, 
-      alpha: true,
-      canvas: container // Utiliser directement le canvas référencé
+      canvas: canvas,
+      alpha: true
     });
     
     this.renderer.setSize(width, height);
+    this.renderer.shadowMap.enabled = true;
+    this.renderer.shadowMap.type = THREE.PCFSoftShadowMap;
+
     this.camera.position.z = 5;
 
     this.controls = new OrbitControls(this.camera, this.renderer.domElement);
@@ -76,49 +85,86 @@ export class TokenRaveComponent implements OnInit, AfterViewInit, OnDestroy {
     this.controls.dampingFactor = 0.25;
     this.controls.screenSpacePanning = false;
 
-    // Ajout des lumières ici plutôt que dans loadSTLModel
-    const ambientLight = new THREE.AmbientLight(0x404040, 2);
+    const ambientLight = new THREE.AmbientLight(0xffffff, 0.5);
     const directionalLight = new THREE.DirectionalLight(0xffffff, 1);
-    directionalLight.position.set(1, 1, 1);
-    this.scene.add(ambientLight, directionalLight);
+    directionalLight.position.set(5, 5, 5);
+    directionalLight.castShadow = true;
+    const pointLight = new THREE.PointLight(0xffffff, 1);
+    pointLight.position.set(-5, 5, -5);
+    pointLight.castShadow = true;
+    this.scene.add(ambientLight, directionalLight, pointLight);
   }
 
   private loadSTLModel() {
     const loader = new STLLoader();
     const modelPath = 'assets/Rave.stl';
-    
+  
     console.log('Loading STL from:', modelPath);
-    
+  
     loader.load(
       modelPath,
       (geometry) => {
         console.log('STL loaded successfully');
-        const material = new THREE.MeshPhongMaterial({ 
-          color: 0x007bff,
-          specular: 0x111111,
-          shininess: 200
+  
+        this.mainMaterial = new MeshPhysicalMaterial({
+          color: 0xFF00FF, // Rose fuchsia
+          metalness: 0.5,
+          roughness: 0.5,
+          reflectivity: 0.5,
+          clearcoat: 0.3,
+          clearcoatRoughness: 0.5
         });
-        this.tokenMesh = new THREE.Mesh(geometry, material);
-
+  
+        const outlineMaterial = new THREE.ShaderMaterial({
+          uniforms: {
+            color: { value: new THREE.Color(0x00ffff) }
+          },
+          vertexShader: `
+            void main() {
+              vec4 pos = modelViewMatrix * vec4(position + normal * 0.03, 1.0);
+              gl_Position = projectionMatrix * pos;
+            }
+          `,
+          fragmentShader: `
+            uniform vec3 color;
+            void main() {
+              gl_FragColor = vec4(color, 0.5);
+            }
+          `,
+          side: THREE.BackSide,
+          transparent: true
+        });
+  
         geometry.center();
-        geometry.computeVertexNormals(); // Important pour l'éclairage
-
-        const box = new THREE.Box3().setFromObject(this.tokenMesh);
+        geometry.computeVertexNormals();
+  
+        const mesh = new THREE.Mesh(geometry, this.mainMaterial);
+        mesh.castShadow = true;
+        mesh.receiveShadow = true;
+        const outlineMesh = new THREE.Mesh(geometry, outlineMaterial);
+        outlineMesh.scale.multiplyScalar(1.05);
+  
+        this.tokenGroup = new THREE.Group();
+        this.tokenGroup.add(mesh);
+        this.tokenGroup.add(outlineMesh);
+  
+        const box = new THREE.Box3().setFromObject(this.tokenGroup);
         const size = box.getSize(new THREE.Vector3());
         const maxDim = Math.max(size.x, size.y, size.z);
         const scale = 4.5 / maxDim;
         
-        this.tokenMesh.scale.set(scale, scale, scale);
-        this.tokenMesh.rotation.x = -Math.PI / 2; // Correction de l'orientation si nécessaire
-
-        this.scene.add(this.tokenMesh);
-
-        // Ajuster la caméra
+        this.tokenGroup.scale.set(scale, scale, scale);
+        this.tokenGroup.rotation.x = -Math.PI / 2;
+  
+        this.scene.add(this.tokenGroup);
+  
         const center = box.getCenter(new THREE.Vector3());
         this.camera.position.set(center.x, center.y + maxDim, center.z + maxDim * 1.5);
         this.camera.lookAt(center);
         this.controls.target.copy(center);
         this.controls.update();
+
+        this.startColorChange();
       },
       (xhr) => {
         console.log((xhr.loaded / xhr.total * 100) + '% loaded');
@@ -132,8 +178,8 @@ export class TokenRaveComponent implements OnInit, AfterViewInit, OnDestroy {
   private animate() {
     this.animationFrameId = requestAnimationFrame(() => this.animate());
 
-    if (this.tokenMesh) {
-      this.tokenMesh.rotation.y += 0.005;
+    if (this.tokenGroup) {
+      this.tokenGroup.rotation.y += 0.005;
     }
 
     this.controls.update();
@@ -144,5 +190,18 @@ export class TokenRaveComponent implements OnInit, AfterViewInit, OnDestroy {
     this.scene.clear();
     this.renderer.dispose();
     this.controls.dispose();
+  }
+
+  private startColorChange() {
+    this.colorChangeInterval = setInterval(() => {
+      this.changeColor();
+    }, 1000); // Change color every second
+  }
+
+  private changeColor() {
+    const hue = Math.random();
+    const saturation = 0.5 + Math.random() * 0.5; // 0.5 to 1
+    const lightness = 0.4 + Math.random() * 0.2; // 0.4 to 0.6
+    this.mainMaterial.color.setHSL(hue, saturation, lightness);
   }
 }
