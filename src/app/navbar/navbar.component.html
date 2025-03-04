@@ -1,1 +1,52 @@
-<p>navbar works!</p>
+<nav class="navbar navbar-expand-lg fixed-top cyberpunk-nav">
+    <div class="container-fluid">
+      <a routerLink="/" class="navbar-brand cyber-btn">
+        <i class="bi bi-house-door-fill"></i> 
+        <span class="d-none d-sm-inline">Accueil</span>
+      </a>
+      
+      <button class="navbar-toggler" type="button" (click)="isMenuCollapsed = !isMenuCollapsed">
+        <span class="navbar-toggler-icon"></span>
+      </button>
+      
+      <div [ngbCollapse]="isMenuCollapsed" class="collapse navbar-collapse">
+        <ul class="navbar-nav me-auto mb-2 mb-lg-0">
+          <li class="nav-item" *ngIf="isLoggedIn">
+            <span class="nav-link cyber-text">
+              <strong>Solde:</strong> 
+              <span class="balance" [@balanceChange]="balance">
+                {{balance | currency:'EUR'}}
+              </span>
+            </span>
+          </li>
+          <li class="nav-item">
+            <a class="nav-link cyber-icon" routerLink="/gestion-account" routerLinkActive="active">
+              <i class="bi bi-credit-card-fill"></i>
+              <span class="d-lg-none ms-2">Gestion du compte</span>
+            </a>
+          </li>
+          <li class="nav-item">
+            <a class="nav-link cyber-icon" routerLink="/security" routerLinkActive="active">
+              <i class="bi bi-shield-lock-fill"></i>
+              <span class="d-lg-none ms-2">Sécurité</span>
+            </a>
+          </li>
+          <li class="nav-item">
+            <a class="nav-link cyber-icon" routerLink="/support" routerLinkActive="active">
+              <i class="bi bi-question-circle-fill"></i>
+              <span class="d-lg-none ms-2">Support</span>
+            </a>
+          </li>
+        </ul>
+        
+        <div class="d-flex">
+          <button class="btn theme-toggle cyber-btn me-2" (click)="toggleTheme()">
+            <i [ngClass]="{'bi bi-moon-fill': !isDarkMode, 'bi bi-sun-fill': isDarkMode}"></i>
+          </button>
+          <button *ngIf="!isLoggedIn" class="btn btn-outline-primary cyber-btn" (click)="login()">Connexion</button>
+          <button *ngIf="isLoggedIn" class="btn btn-outline-danger cyber-btn" (click)="logout()">Déconnexion</button>
+        </div>
+      </div>
+    </div>
+  </nav>
+  
