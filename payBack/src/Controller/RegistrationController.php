@@ -19,6 +19,8 @@ use Symfony\Component\Routing\Attribute\Route;
 use Symfony\Contracts\Translation\TranslatorInterface;
 use SymfonyCasts\Bundle\VerifyEmail\Exception\VerifyEmailExceptionInterface;
 use Lexik\Bundle\JWTAuthenticationBundle\Services\JWTTokenManagerInterface;
+use Symfony\Component\Validator\Validator\ValidatorInterface;
+use Nelmio\CorsBundle\Annotation\Cors;
 
 class RegistrationController extends AbstractController
 {
@@ -97,30 +99,74 @@ class RegistrationController extends AbstractController
         return $this->redirectToRoute('app_home');
     }
 
-    #[Route('/api/register', name: 'app_api_register', methods: ['POST'])]
+    #[Route('/api/register', name: 'app_api_register', methods: ['POST', 'OPTIONS'])]
+    #[Cors(
+        origin: ['http://localhost:4200'],
+        methods: ['POST', 'OPTIONS'],
+        allowCredentials: true,
+        headers: ['Content-Type', 'Authorization', 'Accept', 'Origin', 'X-Requested-With']
+    )]
     public function apiRegister(
         Request $request,
         UserPasswordHasherInterface $passwordHasher,
-        JWTTokenManagerInterface $jwtManager
+        JWTTokenManagerInterface $jwtManager,
+        ValidatorInterface $validator
     ): JsonResponse {
-        $data = json_decode($request->getContent(), true);
+        try {
+            $data = json_decode($request->getContent(), true);
 
-        if (!isset($data['email'], $data['password'])) {
-            return $this->json(['error' => 'Email et mot de passe requis'], 400);
+            if (!$data) {
+                return $this->json(['message' => 'Invalid JSON data'], Response::HTTP_BAD_REQUEST);
+            }
+
+            $user = new User();
+            $user->setEmail($data['email'] ?? '')
+                ->setUsername($data['username'] ?? '')
+                ->setPhoneNumber($data['phoneNumber'] ?? '')
+                ->setAddress($data['address'] ?? '');
+
+            // Validate the entity
+            $errors = $validator->validate($user);
+            if (count($errors) > 0) {
+                $errorMessages = [];
+                foreach ($errors as $error) {
+                    $errorMessages[] = $error->getMessage();
+                }
+                return $this->json(['message' => 'Validation failed', 'errors' => $errorMessages], Response::HTTP_BAD_REQUEST);
+            }
+
+            // Check if email already exists
+            $existingUser = $this->entityManager->getRepository(User::class)->findOneBy(['email' => $user->getEmail()]);
+            if ($existingUser) {
+                return $this->json(['message' => 'Un compte existe déjà avec cet email'], Response::HTTP_CONFLICT);
+            }
+
+            // Hash the password
+            if (!isset($data['password'])) {
+                return $this->json(['message' => 'Password is required'], Response::HTTP_BAD_REQUEST);
+            }
+
+            $hashedPassword = $passwordHasher->hashPassword($user, $data['password']);
+            $user->setPassword($hashedPassword);
+
+            // Save the user
+            $this->entityManager->persist($user);
+            $this->entityManager->flush();
+
+            return $this->json([
+                'message' => 'User registered successfully',
+                'user' => [
+                    'id' => $user->getId(),
+                    'email' => $user->getEmail(),
+                    'username' => $user->getUsername()
+                ]
+            ], Response::HTTP_CREATED);
+
+        } catch (\Exception $e) {
+            return $this->json([
+                'message' => 'Une erreur est survenue lors de l\'inscription',
+                'error' => $e->getMessage()
+            ], Response::HTTP_INTERNAL_SERVER_ERROR);
         }
-
-        $user = new User();
-        $user->setEmail($data['email']);
-        $user->setPassword(
-            $passwordHasher->hashPassword($user, $data['password'])
-        );
-
-        $this->entityManager->persist($user);
-        $this->entityManager->flush();
-
-        return $this->json([
-            'token' => $jwtManager->create($user),
-            'user' => $user->getUserIdentifier()
-        ]);
     }
 }

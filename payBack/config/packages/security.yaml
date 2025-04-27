@@ -10,6 +10,10 @@ security:
         dev:
             pattern: ^/(_(profiler|wdt)|css|images|js)/
             security: false
+        registration:
+            pattern: ^/api/register
+            stateless: true
+            security: false
         login:
             pattern: ^/api/login
             stateless: true
@@ -30,9 +34,8 @@ security:
                 enable_csrf: true
             logout:
                 path: app_logout
-                # where to redirect after logout
-                # target: app_any_route
     access_control:
+        - { path: ^/api/register, roles: PUBLIC_ACCESS }
         - { path: ^/api/login, roles: PUBLIC_ACCESS }
         - { path: ^/api, roles: IS_AUTHENTICATED_FULLY }
         # - { path: ^/admin, roles: ROLE_ADMIN }
